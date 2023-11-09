@@ -49,5 +49,5 @@ class ApiAuth {
   }
 }
 
-export const apiAuth = new ApiAuth('http://localhost:3000');
-// export const apiAuth = new ApiAuth("https://auth.nomoreparties.co");
+// export const apiAuth = new ApiAuth('http://localhost:3000');
+export const apiAuth = new ApiAuth("https://auth.nomoreparties.co");
