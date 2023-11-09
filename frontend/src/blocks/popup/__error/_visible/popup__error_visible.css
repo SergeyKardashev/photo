@@ -1,0 +1,9 @@
+/* на замену */
+.popup__error_visible {
+  opacity: 1;
+}
+
+/* лишний класс */
+/* .form__input-error_active {
+  opacity: 1;
+} */

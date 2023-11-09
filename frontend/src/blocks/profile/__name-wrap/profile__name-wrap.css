@@ -1,0 +1,19 @@
+.profile__name-wrap {
+  /* обертка имени и кнопки редактирования */
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+@media screen and (max-width: 917px) {
+  .profile__name-wrap {
+    position: relative;
+    left: 15px;
+  }
+}
+
+@media screen and (max-width: 617px) {
+  .profile__name-wrap {
+    left: 13px;
+  }
+}

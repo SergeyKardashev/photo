@@ -1,0 +1,12 @@
+.auth__button {
+  border-radius: 2px;
+  width: 100%;
+  background: #fff;
+  color: #000;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  font-size: 18px;
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+}

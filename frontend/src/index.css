@@ -1,0 +1,104 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts.css);
+
+@import url(./blocks/body/body.css);
+
+@import url(./blocks/page/page.css);
+
+/* header */
+
+@import url(./blocks/header/header.css);
+@import url(./blocks/header/__logo/header__logo.css);
+
+/* main */
+
+/* возможно лишний класс */
+@import url(./blocks/main/main.css);
+
+/* auth - компоненты register и login */
+@import url(./blocks/auth/auth.css);
+@import url(./blocks/auth/__button/auth__button.css);
+@import url(./blocks/auth/__fieldset/auth__fieldset.css);
+@import url(./blocks/auth/__form/auth__form.css);
+@import url(./blocks/auth/__header/auth__header.css);
+@import url(./blocks/auth/__input/auth__input.css);
+@import url(./blocks/auth/__paragraph/auth__paragraph.css);
+@import url(./blocks/auth/__paragraph-link/auth__paragraph-link.css);
+
+/* profile */
+
+@import url(./blocks/profile/profile.css);
+@import url(./blocks/profile/__account/profile__account.css);
+@import url(./blocks/profile/__avatar-wrap/profile__avatar-wrap.css);
+@import url(./blocks/profile/__avatar/profile__avatar.css);
+@import url(./blocks/profile/__avatar-edit-btn/profile__avatar-edit-btn.css);
+
+@import url(./blocks/profile/__txt/profile__txt.css);
+@import url(./blocks/profile/__name-wrap/profile__name-wrap.css);
+@import url(./blocks/profile/__name/profile__name.css);
+@import url(./blocks/profile/__edit-btn/profile__edit-btn.css);
+@import url(./blocks/profile/__about/profile__about.css);
+@import url(./blocks/profile/__add-place-btn/profile__add-place-btn.css);
+
+/* gallery */
+
+@import url(./blocks/gallery/gallery.css);
+@import url(./blocks/gallery/__element/gallery__element.css);
+@import url(./blocks/gallery/__img/gallery__img.css);
+@import url(./blocks/gallery/__caption-wrap/gallery__caption-wrap.css);
+@import url(./blocks/gallery/__text/gallery__text.css);
+@import url(./blocks/gallery/__like/gallery__like.css);
+@import url(./blocks/gallery/__like-wrap/gallery__like-wrap.css);
+@import url(./blocks/gallery/__like-number/gallery__like-number.css);
+
+@import url(./blocks/gallery/__like/_active/gallery__like_active.css);
+@import url(./blocks/gallery/__delete/gallery__delete.css);
+@import url(./blocks/gallery/__delete/_hidden/gallery__delete_hidden.css);
+
+/* footer */
+
+@import url(./blocks/footer/footer.css);
+@import url(./blocks/footer/__copyright/footer__copyright.css);
+
+/* popup */
+
+@import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/__container/popup__container.css);
+@import url(./blocks/popup/__close-button/popup__close-button.css);
+@import url(./blocks/popup/__close-button/_type/popup__close-button_type_zoom-image.css);
+@import url(./blocks/popup/__heading/popup__heading.css);
+@import url(./blocks/popup/__heading/_type/popup__heading_type_infotooltip.css);
+
+@import url(./blocks/popup/_opened/popup_opened.css);
+@import url(./blocks/popup/__image-zoom/popup__image-zoom.css);
+@import url(./blocks/popup/__container/_type/popup__container_type_zoom-image.css);
+@import url(./blocks/popup/__container/_type/popup__container_type_infotooltip.css);
+@import url(./blocks/popup/__caption/popup__caption.css);
+@import url(./blocks/popup/_type/popup_type_zoom-image.css);
+@import url(./blocks/popup/__info-tooltip-img/popup__info-tooltip-img.css);
+
+/* форма */
+@import url(./blocks/popup/__form/popup__form.css);
+
+/* инпут */
+@import url(./blocks/popup/__input/popup__input.css);
+@import url(./blocks/popup/__input/_type/popup__input_type_error.css);
+
+/* ошибка */
+@import url(./blocks/popup/__error/popup__error.css);
+@import url(./blocks/popup/__error/_visible/popup__error_visible.css);
+
+/* кнопка  */
+@import url(./blocks/popup/__submit-button/popup__submit-button.css);
+@import url(./blocks/popup/__submit-button/_inactive/popup__submit-button_inactive.css);
+
+/* инпут */
+/* form__input_invalid > popup__input_type_error */
+/* @import url(./blocks/form/__input/_invalid/form__input_invalid.css); */
+
+/* ошибка */
+
+/* form__input-error > popup__error */
+/* @import url(./blocks/form/input-error/form__input-error.css); */
+/* form__input-error_active > .popup__error_visible */
+/* @import url(./blocks/form/input-error/_active/form__input-error_active.css); */

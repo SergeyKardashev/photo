@@ -1,0 +1,29 @@
+.profile__add-place-btn {
+  width: 100%;
+  max-width: 150px;
+  height: 50px;
+  background-image: url(../../../images/add_icon.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+  border: 2px solid white;
+  border-radius: 2px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  position: relative;
+  bottom: 4px;
+  background-color: transparent;
+}
+
+.profile__add-place-btn:hover {
+  opacity: 60%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 917px) {
+  .profile__add-place-btn {
+    margin-top: 33px;
+    max-width: 282px;
+    background-size: 16px 16px;
+  }
+}

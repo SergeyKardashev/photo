@@ -1,0 +1,16 @@
+.profile__txt {
+  margin-top: auto;
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: auto;
+  padding-top: 0;
+  padding-right: 0;
+  padding-left: 30px;
+  padding-bottom: 0;
+}
+
+@media screen and (max-width: 917px) {
+  .profile__txt {
+    padding-left: 0;
+  }
+}
