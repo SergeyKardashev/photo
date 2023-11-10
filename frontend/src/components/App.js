@@ -37,6 +37,8 @@ function App() {
   useEffect(() => {
     console.log("токен чек");
     tokenCheck();
+  // Сергей: мне кажется чекать токен лучше при изменении урла
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function tokenCheck() {

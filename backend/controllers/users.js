@@ -40,6 +40,7 @@ async function createUser(req, res, next) {
   }
 }
 
+// временная на заголовках.
 async function login(req, res, next) {
   const { email, password } = req.body;
   try {
@@ -51,15 +52,34 @@ async function login(req, res, next) {
     if (!matched) throw new UnauthorizedError('Неверные почта или пароль');
     const token = generateToken({ _id: user._id });
 
-    return res
-      .cookie('jwt', token, { maxAge: 604800000, httpOnly: true, sameSite: true })
-      .send({ email: user.email, _id: user._id, message: 'token in cookie' })
-      .end();
+    return res.send({ token });
+    // return res.cookie(token);
   } catch (err) {
-    res.clearCookie('jwt');
+    // res.clearCookie('jwt');
     return next(err);
   }
 }
+
+// async function login(req, res, next) {
+//   const { email, password } = req.body;
+//   try {
+//     const user = await User.findOne({ email })
+//       .select('+password')
+//       .orFail(new UnauthorizedError('Неверные почта или пароль'));
+
+//     const matched = await bcrypt.compare(password, user.password);
+//     if (!matched) throw new UnauthorizedError('Неверные почта или пароль');
+//     const token = generateToken({ _id: user._id });
+
+//     return res
+//       .cookie('jwt', token, { maxAge: 604800000, httpOnly: true, sameSite: true })
+//       .send({ email: user.email, _id: user._id, message: 'token in cookie' })
+//       .end();
+//   } catch (err) {
+//     res.clearCookie('jwt');
+//     return next(err);
+//   }
+// }
 
 function getAllUsers(req, res, next) {
   return User.find()
