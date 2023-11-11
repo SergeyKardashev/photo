@@ -51,7 +51,6 @@ async function login(req, res, next) {
     const matched = await bcrypt.compare(password, user.password);
     if (!matched) throw new UnauthorizedError('Неверные почта или пароль');
     const token = generateToken({ _id: user._id });
-
     return res.send({ token });
     // return res.cookie(token);
   } catch (err) {

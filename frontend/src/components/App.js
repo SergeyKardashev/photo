@@ -34,40 +34,40 @@ function App() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("токен чек");
-    tokenCheck();
-  // Сергей: мне кажется чекать токен лучше при изменении урла
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // console.log('loggedIn is ', loggedIn);
 
-  function tokenCheck() {
+  useEffect(() => {
+    // Заменяю проверку наличия токена проверкой статус залогиненности
+    // const token = getToken();
+    // if (token ) {
+    if (loggedIn ) {
+      const promisedInitialCards = api.getInitialCards();
+      const promisedUserInfo = api.getUserInfo();
+
+      Promise.all([promisedUserInfo, promisedInitialCards])
+        .then(([userInfo, initialCards]) => {
+          setCards(initialCards);
+          setCurrentUser(userInfo);
+        })
+        .catch(console.error);
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
     const token = getToken();
 
     if (token) {
       apiAuth
         .validateToken(token)
         .then((response) => {
-          // --- !!! в ответе объект data, в нем 2 поля _id, email !!! ---
-          setUserEmail(response.data.email);
+          setUserEmail(response.email);
           setLoggedIn(true);
           navigate("/", { replace: true });
         })
         .catch(console.error);
     }
-  }
-
-  useEffect(() => {
-    const promisedInitialCards = api.getInitialCards();
-    const promisedUserInfo = api.getUserInfo();
-
-    Promise.all([promisedUserInfo, promisedInitialCards])
-      .then(([userInfo, initialCards]) => {
-        setCards(initialCards);
-        setCurrentUser(userInfo);
-      })
-      .catch(console.error);
   }, []);
+  // }, [navigate]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -91,7 +91,13 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    /* Было так до просмотра видоса про сращивание
+    const isLiked = card.likes.some((i) => i._id === currentUser._id); */
+
+    const isLiked = card.likes.some((id) => id === currentUser.userId);
+    // добавил проверку.
+    // const isLiked = card.likes?.some((id) => id === currentUser.userId)??false;
 
     api
       .changeLikeCardStatus(card._id, !isLiked)

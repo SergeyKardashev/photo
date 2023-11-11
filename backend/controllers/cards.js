@@ -13,11 +13,15 @@ function getAllCards(req, res, next) {
 
 function createCard(req, res, next) {
   return Card.create({ name: req.body.name, link: req.body.link, owner: req.user._id })
+    // .populate(['likes', 'owner'])
+    // .populate(['likes'])
     .then((dataFromDB) => res.status(STATUS_CREATED)
       .send({
         name: dataFromDB.name,
         link: dataFromDB.link,
         _id: dataFromDB._id,
+        owner: dataFromDB.owner,
+        likes: [],
       }))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
@@ -33,6 +37,8 @@ function likeCard(req, res, next) {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
+    // .populate(['likes'])
+    // .populate(['likes', 'owner'])
     .orFail(new Error('Not found'))
     .then((dataFromDB) => res.send(dataFromDB))
     .catch((err) => {
@@ -52,6 +58,7 @@ function dislikeCard(req, res, next) {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
+    // .populate(['likes', 'owner'])
     .orFail(new Error('Not found'))
     .then((dataFromDB) => res.send(dataFromDB))
     .catch((err) => {

@@ -3,8 +3,8 @@ import logoPath from "../images/logo.svg";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 
 function Header(props) {
-  const location = useLocation();
-  console.log(location);
+  // const location = useLocation();
+  // console.log(location);
 
   return (
     <header className="header page__header">

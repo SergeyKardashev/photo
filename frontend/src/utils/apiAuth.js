@@ -1,4 +1,4 @@
-import { setToken } from "./token";
+import { setToken, getToken } from "./token";
 
 class ApiAuth {
   constructor(baseUrl) {
@@ -12,6 +12,7 @@ class ApiAuth {
     return res.json();
   }
 
+  // отрефакторил функцию
   authorize(password, email) {
     return fetch(`${this.baseUrl}/signin`, {
       method: "POST",
@@ -20,15 +21,29 @@ class ApiAuth {
     })
       .then(this._checkResponse)
       .then((data) => {
-        if (data.token) {
-          setToken(data.token);
-          return data;
-        } else {
-          console.log("NO token in response from authorize");
-          return;
-        }
+        if (!data.token) console.log("NO token in response from authorize");
+        setToken(data.token);
+        return data;
       });
   }
+
+  // authorize(password, email) {
+  //   return fetch(`${this.baseUrl}/signin`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ password, email }),
+  //   })
+  //     .then(this._checkResponse)
+  //     .then((data) => {
+  //       if (data.token) {
+  //         setToken(data.token);
+  //         return data;
+  //       } else {
+  //         console.log("NO token in response from authorize");
+  //         return;
+  //       }
+  //     });
+  // }
 
   signup(userData) {
     return fetch(`${this.baseUrl}/signup`, {
@@ -38,12 +53,17 @@ class ApiAuth {
     }).then(this._checkResponse);
   }
 
-  validateToken(jwt) {
+  validateToken() {
+    // const token = localStorage.getItem('jwt');
+    const token = getToken();
+
     return fetch(`${this.baseUrl}/users/me`, {
       method: "GET",
       headers: {
+        // у препода доп.заголовок Accept
+	      // 'Accept': 'application/json',
         "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
+        Authorization: `Bearer ${token}`,
       },
     }).then(this._checkResponse);
   }
