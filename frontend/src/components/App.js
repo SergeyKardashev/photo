@@ -16,7 +16,6 @@ import InfoTooltip from "./InfoTooltip";
 import { getToken, removeToken } from "../utils/token";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import AppContext from "../contexts/AppContext";
-import { apiAuth } from "../utils/apiAuth";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -34,12 +33,7 @@ function App() {
 
   const navigate = useNavigate();
 
-  // console.log('loggedIn is ', loggedIn);
-
   useEffect(() => {
-    // Заменяю проверку наличия токена проверкой статус залогиненности
-    // const token = getToken();
-    // if (token ) {
     if (loggedIn ) {
       const promisedInitialCards = api.getInitialCards();
       const promisedUserInfo = api.getUserInfo();
@@ -57,8 +51,11 @@ function App() {
     const token = getToken();
 
     if (token) {
-      apiAuth
-        .validateToken(token)
+      api
+        // .validateToken(token)
+        // лишняя ручка (сказал препод). getUserInfo и так проверяет токен
+        // И токен передавать аргументом не надо, т.к. в функции его добываю
+        .getUserInfo()
         .then((response) => {
           setUserEmail(response.email);
           setLoggedIn(true);
@@ -68,6 +65,8 @@ function App() {
     }
   }, []);
   // }, [navigate]);
+  // }, [window.location.href]);
+
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -91,13 +90,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-
-    /* Было так до просмотра видоса про сращивание
-    const isLiked = card.likes.some((i) => i._id === currentUser._id); */
-
     const isLiked = card.likes.some((id) => id === currentUser.userId);
-    // добавил проверку.
-    // const isLiked = card.likes?.some((id) => id === currentUser.userId)??false;
 
     api
       .changeLikeCardStatus(card._id, !isLiked)
@@ -148,7 +141,7 @@ function App() {
   }
 
   function cbLogin(password, email) {
-    apiAuth
+    api
       .authorize(password, email)
       .then((dataUser) => {
         setUserEmail(email);
@@ -160,7 +153,7 @@ function App() {
   }
 
   function cbRegister(userData) {
-    apiAuth
+    api
       .signup(userData)
       .then(() => {
         setIsRegistered(true);

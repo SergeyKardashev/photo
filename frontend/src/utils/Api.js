@@ -1,3 +1,5 @@
+import { setToken, getToken } from "./token";
+
 class Api {
   constructor(options) {
     this.options = options;
@@ -5,18 +7,49 @@ class Api {
   }
 
   _checkResponse(res) {
-    if (!res.ok) {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
+    if (!res.ok) return Promise.reject(`Ошибка: ${res.status}`);
     return res.json(); // тут проверка ответа
   }
 
-  getUserInfo() {
-    const token = localStorage.getItem('jwt');
+  authorize(password, email) {
+    return fetch(`${this.options.baseUrl}/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password, email }),
+    })
+    .then(this._checkResponse)
+    .then((data) => {
+      if (!data.token) console.log("NO token in response from authorize");
+      setToken(data.token);
+      return data;
+    });
+  }
 
+  signup(userData) {
+    return fetch(`${this.options.baseUrl}/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    }).then(this._checkResponse);
+  }
+
+  // validateToken() {
+  //   const token = getToken();
+  //   return fetch(`${this.options.baseUrl}/users/me`, {
+  //     method: "GET",
+  //     headers: {
+  //       // у препода доп.заголовок Accept
+	//       // 'Accept': 'application/json',
+  //       "Content-Type": "application/json",
+  //       'Authorization': `Bearer ${token}`,
+  //     },
+  //   }).then(this._checkResponse);
+  // }
+
+  getUserInfo() {
+    const token = getToken();
     return fetch(`${this.options.baseUrl}/users/me`, {
       method: "GET",
-      // headers: this.options.headers,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -25,11 +58,9 @@ class Api {
   }
 
   getInitialCards() {
-    const token = localStorage.getItem('jwt');
-
+    const token = getToken();
     return fetch(`${this.options.baseUrl}/cards`, {
       method: "GET",
-      // headers: this.options.headers,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -39,27 +70,23 @@ class Api {
 
   changeLikeCardStatus(cardId, isLiked) {
     if (isLiked === true) {
-      const token = localStorage.getItem('jwt');
-
+      const token = getToken();
       return fetch(`${this.options.baseUrl}/cards/${cardId}/likes`, {
         method: "PUT",
-        // headers: this.options.headers,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }
-      }).then(this._checkResponse);
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        }
+        }).then(this._checkResponse);
     } else {
-      const token = localStorage.getItem('jwt');
-
+      const token = getToken();
       return fetch(`${this.options.baseUrl}/cards/${cardId}/likes`, {
         method: "DELETE",
-        // headers: this.options.headers,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }
-      }).then(this._checkResponse);
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        }
+        }).then(this._checkResponse);
     }
   }
 
@@ -68,7 +95,6 @@ class Api {
 
     return fetch(`${this.options.baseUrl}/users/me`, {
       method: "PATCH",
-      // headers: this.options.headers,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -82,7 +108,6 @@ class Api {
 
     return fetch(`${this.options.baseUrl}/cards`, {
       method: "POST",
-      // headers: this.options.headers,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -96,7 +121,6 @@ class Api {
 
     return fetch(`${this.options.baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      // headers: this.options.headers,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -109,7 +133,6 @@ class Api {
 
     return fetch(`${this.options.baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      // headers: this.options.headers,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -121,13 +144,6 @@ class Api {
 
 const api = new Api({
   baseUrl: "http://localhost:3000",
-  // baseAuthUrl: "https://auth.nomoreparties.co",
-
-  // baseUrl: "https://mesto.nomoreparties.co/v1/cohort-72",
-  // headers: {
-  //   authorization: "ae5a51f8-81eb-4b98-b197-2ef227e48cb1",
-  //   "Content-Type": "application/json",
-  // },
 });
 
 export { api };

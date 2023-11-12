@@ -37,8 +37,6 @@ function likeCard(req, res, next) {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    // .populate(['likes'])
-    // .populate(['likes', 'owner'])
     .orFail(new Error('Not found'))
     .then((dataFromDB) => res.send(dataFromDB))
     .catch((err) => {
@@ -58,7 +56,6 @@ function dislikeCard(req, res, next) {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    // .populate(['likes', 'owner'])
     .orFail(new Error('Not found'))
     .then((dataFromDB) => res.send(dataFromDB))
     .catch((err) => {
