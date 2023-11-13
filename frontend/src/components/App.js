@@ -37,11 +37,11 @@ function App() {
     if (loggedIn ) {
       const promisedInitialCards = api.getInitialCards();
       const promisedUserInfo = api.getUserInfo();
-
       Promise.all([promisedUserInfo, promisedInitialCards])
         .then(([userInfo, initialCards]) => {
           setCards(initialCards);
           setCurrentUser(userInfo);
+          setUserEmail(userInfo.email);
         })
         .catch(console.error);
     }
@@ -51,20 +51,20 @@ function App() {
     const token = getToken();
 
     if (token) {
-      api
-        // .validateToken(token)
-        // лишняя ручка (сказал препод). getUserInfo и так проверяет токен
-        // И токен передавать аргументом не надо, т.к. в функции его добываю
-        .getUserInfo()
-        .then((response) => {
-          setUserEmail(response.email);
+      console.log(token);
+      // api
+      //   // .validateToken(token)
+      //   // лишняя ручка (сказал препод). getUserInfo и так проверяет токен
+      //   // И токен передавать аргументом не надо, т.к. в функции его добываю
+      //   .getUserInfo()
+      //   .then((response) => {
+          // setUserEmail(response.email);
           setLoggedIn(true);
           navigate("/", { replace: true });
-        })
-        .catch(console.error);
+        // })
+        // .catch(console.error);
     }
-  }, []);
-  // }, [navigate]);
+  }, [navigate]);
   // }, [window.location.href]);
 
 

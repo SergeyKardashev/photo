@@ -12,6 +12,7 @@ const appRouter = require('./routes/index');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error-handler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -54,11 +55,16 @@ app.use(express.static('public'));
 
 // =========== STATIC (end) ===============
 
+app.use(requestLogger); // логгер запросов ПЕРЕД всеми роутами.
+
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser); // register
 
 app.use(auth);
 app.use(appRouter);
+
+app.use(errorLogger); // логгер ошибок между роутерами и обработчиками ошибок
+
 app.use(errors()); // celebrate error handler
 app.use(errorHandler); // global error handler and sorter for CAUGHT errors
 
