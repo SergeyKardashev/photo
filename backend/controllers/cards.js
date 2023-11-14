@@ -31,12 +31,9 @@ function createCard(req, res, next) {
     });
 }
 
-function likeCard(req, res, next) {
-  return Card.findByIdAndUpdate(
-    req.params.cardId,
-    { $addToSet: { likes: req.user._id } },
-    { new: true },
-  )
+function updateLike(req, res, next, method) {
+  const { params: { cardId } } = req;
+  return Card.findByIdAndUpdate(cardId, { [method]: { likes: req.user._id } }, { new: true })
     .orFail(new Error('Not found'))
     .then((dataFromDB) => res.send(dataFromDB))
     .catch((err) => {
@@ -50,24 +47,53 @@ function likeCard(req, res, next) {
     });
 }
 
-function dislikeCard(req, res, next) {
-  return Card.findByIdAndUpdate(
-    req.params.cardId,
-    { $pull: { likes: req.user._id } },
-    { new: true },
-  )
-    .orFail(new Error('Not found'))
-    .then((dataFromDB) => res.send(dataFromDB))
-    .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные для постановки/снятии лайка'));
-      }
-      if (err.message === 'Not found') {
-        return next(new NotFoundError('Передан несуществующий _id карточки'));
-      }
-      return next(err);
-    });
+function likeCard(req, res, next) {
+  updateLike(req, res, next, '$addToSet');
 }
+
+function dislikeCard(req, res, next) {
+  updateLike(req, res, next, '$pull');
+}
+
+// function likeCard(req, res, next) {
+//   return Card.findByIdAndUpdate(
+//     req.params.cardId,
+//     { $addToSet: { likes: req.user._id } },
+//     { new: true },
+//   )
+//     .orFail(new Error('Not found'))
+//     .then((dataFromDB) => res.send(dataFromDB))
+//     .catch((err) => {
+//       if (err.message === 'Not found') {
+//         return next(new NotFoundError('Передан несуществующий _id карточки'));
+//       }
+//       if (err.name === 'CastError' || err.name === 'ValidationError') {
+// eslint-disable-next-line max-len
+//         return next(new BadRequestError('Переданы некорректные данные для постановки/снятии лайка'));
+//       }
+//       return next(err);
+//     });
+// }
+
+// function dislikeCard(req, res, next) {
+//   return Card.findByIdAndUpdate(
+//     req.params.cardId,
+//     { $pull: { likes: req.user._id } },
+//     { new: true },
+//   )
+//     .orFail(new Error('Not found'))
+//     .then((dataFromDB) => res.send(dataFromDB))
+//     .catch((err) => {
+//       if (err.name === 'CastError' || err.name === 'ValidationError') {
+// eslint-disable-next-line max-len
+//         return next(new BadRequestError('Переданы некорректные данные для постановки/снятии лайка'));
+//       }
+//       if (err.message === 'Not found') {
+//         return next(new NotFoundError('Передан несуществующий _id карточки'));
+//       }
+//       return next(err);
+//     });
+// }
 
 async function findCardById(cardId) {
   const cardData = await Card.findById(cardId)
