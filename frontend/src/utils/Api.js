@@ -1,4 +1,5 @@
 import { setToken, getToken } from "./token";
+const { NODE_ENV, REACT_APP_API_URL } = process.env;
 
 class Api {
   constructor(options) {
@@ -142,8 +143,12 @@ class Api {
   }
 }
 
-const api = new Api({
-  baseUrl: "http://localhost:3000",
+let baseUrl = NODE_ENV === 'production' ? REACT_APP_API_URL : 'http://localhost:3000';
+// let baseUrl = REACT_APP_API_URL; // для теста .env
+
+
+const api = new Api({ baseUrl
+  // baseUrl: "http://localhost:3000",
 });
 
 export { api };

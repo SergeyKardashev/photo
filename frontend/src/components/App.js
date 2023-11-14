@@ -51,7 +51,7 @@ function App() {
     const token = getToken();
 
     if (token) {
-      console.log(token);
+      // console.log(token);
       // api
       //   // .validateToken(token)
       //   // лишняя ручка (сказал препод). getUserInfo и так проверяет токен

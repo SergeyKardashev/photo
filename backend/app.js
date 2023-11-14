@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const process = require('process');
@@ -25,10 +26,11 @@ const limiter = rateLimit({
 // IN CASE THERE IS AN ERROR THAT HASN'T BEEN HANDLED
 process.on('uncaughtException', (err, origin) => {
   // eslint-disable-next-line no-console
-  console.log(`${origin} ${err.name} c текстом ${err.message} не была обработана. Сработал глобальный обработчик ошибок.`);
+  console.log(`ОЙ ${origin} ${err.name} c текстом ${err.message} не была обработана. Сработал глобальный обработчик ошибок.`);
 });
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+// const { PORT, DB_URL } = process.env; // для тестирования .env
 
 mongoose
   .connect(DB_URL, { useNewUrlParser: true })
