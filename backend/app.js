@@ -74,5 +74,4 @@ app.listen(PORT, () => {
   // console.log('mongoose version', mongoose.version);
   // eslint-disable-next-line no-console
   console.log(`App listening on port ${PORT} NODE_ENV = ${NODE_ENV}`);
-
 });
