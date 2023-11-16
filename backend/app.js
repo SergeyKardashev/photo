@@ -29,7 +29,7 @@ process.on('uncaughtException', (err, origin) => {
   console.log(`ОЙ ${origin} ${err.name} c текстом ${err.message} не была обработана. Сработал глобальный обработчик ошибок.`);
 });
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+const { PORT = 3000, NODE_ENV, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 // const { PORT, DB_URL } = process.env; // для тестирования .env
 
 mongoose
@@ -73,5 +73,6 @@ app.use(errorHandler); // global error handler and sorter for CAUGHT errors
 app.listen(PORT, () => {
   // console.log('mongoose version', mongoose.version);
   // eslint-disable-next-line no-console
-  console.log(`App listening on port ${PORT}`);
+  console.log(`App listening on port ${PORT} NODE_ENV = ${NODE_ENV}`);
+
 });

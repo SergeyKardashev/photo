@@ -6,6 +6,10 @@ npm-debug.log*
 # Dependency directory
 node_modules
 
+# BUILD folders
+frontend/build
+backend/build
+
 # Optional npm cache directory
 .npm
 
