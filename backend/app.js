@@ -36,12 +36,6 @@ app.use(limiter); // Apply the rate limiting middleware to all requests.
 
 app.use(requestLogger); // логгер запросов ПЕРЕД всеми роутами.
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-
 app.use(appRouter);
 
 app.use(errorLogger); // логгер ошибок между роутерами и обработчиками ошибок

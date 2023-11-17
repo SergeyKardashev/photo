@@ -6,6 +6,12 @@ const { validateLogin, validateCreateUser } = require('../validators/celebrate-v
 const { login, createUser } = require('../controllers/users');
 const wrongRequestsRouter = require('./wrong-requests-router');
 
+appRouter.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 appRouter.post('/signin', validateLogin, login);
 appRouter.post('/signup', validateCreateUser, createUser);
 
