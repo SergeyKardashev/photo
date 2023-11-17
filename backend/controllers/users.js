@@ -12,13 +12,20 @@ const UnauthorizedError = require('../errors/unauthorized-error');
 const { SALT_ROUNDS = 10 } = process.env;
 const opts = { runValidators: true, new: true };
 
+const generateHash = async (text, size) => {
+  const salt = await bcrypt.genSalt(size);
+  const hash = await bcrypt.hash(text, salt);
+
+  return hash;
+};
+
 async function createUser(req, res, next) {
   const {
     email, password, name, about, avatar,
   } = req.body;
 
   try {
-    const hash = await bcrypt.hash(password, SALT_ROUNDS);
+    const hash = await generateHash(password, Number(SALT_ROUNDS));
     const user = await User.create({
       email,
       password: hash,
@@ -52,33 +59,10 @@ async function login(req, res, next) {
     if (!matched) throw new UnauthorizedError('Неверные почта или пароль');
     const token = generateToken({ _id: user._id });
     return res.send({ token });
-    // return res.cookie(token);
   } catch (err) {
-    // res.clearCookie('jwt');
     return next(err);
   }
 }
-
-// async function login(req, res, next) {
-//   const { email, password } = req.body;
-//   try {
-//     const user = await User.findOne({ email })
-//       .select('+password')
-//       .orFail(new UnauthorizedError('Неверные почта или пароль'));
-
-//     const matched = await bcrypt.compare(password, user.password);
-//     if (!matched) throw new UnauthorizedError('Неверные почта или пароль');
-//     const token = generateToken({ _id: user._id });
-
-//     return res
-//       .cookie('jwt', token, { maxAge: 604800000, httpOnly: true, sameSite: true })
-//       .send({ email: user.email, _id: user._id, message: 'token in cookie' })
-//       .end();
-//   } catch (err) {
-//     res.clearCookie('jwt');
-//     return next(err);
-//   }
-// }
 
 function getAllUsers(req, res, next) {
   return User.find()
