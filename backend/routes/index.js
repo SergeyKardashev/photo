@@ -7,9 +7,8 @@ const { login, createUser } = require('../controllers/users');
 const wrongRequestsRouter = require('./wrong-requests-router');
 
 //  удалить краш-тестовый роут после ревью.
-appRouter.get('/crash-test', (req, res) => {
+appRouter.get('/crash-test', () => {
   setTimeout(() => {
-    res.send({ message: 'Краш тест - сейчас будет больно' });
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
