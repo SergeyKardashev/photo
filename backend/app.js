@@ -39,8 +39,10 @@ mongoose
 
 const app = express();
 
-app.use(cors()); // добавил CORS как мидлвэру, установил и импортировал
 app.use(helmet());
+
+app.use(cors()); // добавил CORS как мидлвэру, установил и импортировал
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(limiter); // Apply the rate limiting middleware to all requests.
