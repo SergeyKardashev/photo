@@ -15,6 +15,7 @@ const limiter = require('./utils/limiter');
 process.on('uncaughtException', (err, origin) => {
   // eslint-disable-next-line no-console
   console.log(`ОЙ ${origin} ${err.name} c текстом ${err.message} не была обработана. Сработал глобальный обработчик ошибок.`);
+  process.exit(1);
 });
 
 const { PORT = 3000, NODE_ENV, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
