@@ -34,7 +34,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedIn ) {
+    if (loggedIn) {
       const promisedInitialCards = api.getInitialCards();
       const promisedUserInfo = api.getUserInfo();
       Promise.all([promisedUserInfo, promisedInitialCards])
@@ -51,22 +51,10 @@ function App() {
     const token = getToken();
 
     if (token) {
-      // console.log(token);
-      // api
-      //   // .validateToken(token)
-      //   // лишняя ручка (сказал препод). getUserInfo и так проверяет токен
-      //   // И токен передавать аргументом не надо, т.к. в функции его добываю
-      //   .getUserInfo()
-      //   .then((response) => {
-          // setUserEmail(response.email);
-          setLoggedIn(true);
-          navigate("/", { replace: true });
-        // })
-        // .catch(console.error);
+      setLoggedIn(true);
+      navigate("/", { replace: true });
     }
   }, [navigate]);
-  // }, [window.location.href]);
-
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -143,13 +131,16 @@ function App() {
   function cbLogin(password, email) {
     api
       .authorize(password, email)
-      .then((dataUser) => {
+      .then((userData) => {
         setUserEmail(email);
         navigate("/", { replace: true });
         setLoggedIn(true);
-        return dataUser;
+        return userData;
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error(err);
+        setIsInfoTooltipOpen(true);
+      });
   }
 
   function cbRegister(userData) {

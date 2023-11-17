@@ -126,7 +126,11 @@ function updateAvatar(req, res, next) {
   const updateObject = req.body;
   return User.findByIdAndUpdate(id, updateObject, opts)
     .orFail(new NotFoundError())
-    .then((avatarData) => res.send({ avatar: avatarData.avatar }))
+    .then((dataFromDB) => res.send({
+      name: dataFromDB.name,
+      about: dataFromDB.about,
+      avatar: dataFromDB.avatar,
+    }))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') return next(new BadRequestError('Переданы некорректные данные при обновлении аватара'));
       if (err.statusCode === STATUS_NOT_FOUND) return next(new NotFoundError('Пользователь с указанным _id не найден'));
