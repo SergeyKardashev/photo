@@ -6,11 +6,9 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.125.209
-
-Frontend https://click.nomoredomainsmonster.ru
-Backend https://api.click.nomoredomainsmonster.ru
-
+IP  158.160.125.209
+Frontend  https://click.nomoredomainsmonster.ru
+Backend  https://api.click.nomoredomainsmonster.ru
 
 # Проект: Место
 
