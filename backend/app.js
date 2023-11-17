@@ -11,13 +11,6 @@ const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./utils/limiter');
 
-// IN CASE THERE IS AN ERROR THAT HASN'T BEEN HANDLED
-process.on('uncaughtException', (err, origin) => {
-  // eslint-disable-next-line no-console
-  console.log(`ОЙ ${origin} ${err.name} c текстом ${err.message} не была обработана. Сработал глобальный обработчик ошибок.`);
-  process.exit(1);
-});
-
 const { PORT = 3000, NODE_ENV, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 mongoose
