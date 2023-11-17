@@ -59,6 +59,12 @@ app.use(express.static('public'));
 
 app.use(requestLogger); // логгер запросов ПЕРЕД всеми роутами.
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser); // register
 

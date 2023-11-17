@@ -7,7 +7,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 // временная мидлвэра на заголовках.
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
-
+  console.log('authorization is ', authorization);
   if (!authorization.startsWith('Bearer')) {
     return next(new UnauthorizedError('Необходима авторизация'));
   }
