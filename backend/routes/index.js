@@ -6,8 +6,10 @@ const { validateLogin, validateCreateUser } = require('../validators/celebrate-v
 const { login, createUser } = require('../controllers/users');
 const wrongRequestsRouter = require('./wrong-requests-router');
 
-appRouter.get('/crash-test', () => {
+//  удалить краш-тестовый роут после ревью.
+appRouter.get('/crash-test', (req, res) => {
   setTimeout(() => {
+    res.send({ message: 'Краш тест - сейчас будет больно' });
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
@@ -17,7 +19,7 @@ appRouter.post('/signup', validateCreateUser, createUser);
 
 appRouter.use(auth);
 
-appRouter.get('/signout', (req, res) => { res.clearCookie('jwt').send({ message: 'Выход' }); });
+// appRouter.get('/signout', (req, res) => { res.clearCookie('jwt').send({ message: 'Выход' }); });
 appRouter.use('/users', usersRouter);
 appRouter.use('/cards', cardsRouter);
 appRouter.use('*', wrongRequestsRouter);
