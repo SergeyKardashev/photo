@@ -27,6 +27,7 @@ Backend https://api.click.nomoredomainsmonster.ru
 - ООП, модульный подход, асинхронность
 - роутинг, авторизация
 - backend на Node.js и Express JS, деплой на Ubuntu в Яндекс.Облаке
+- хехирование паролей, авторизация на токенах, сбор логов
 - iron butt
 
 **Исходник**
