@@ -67,7 +67,7 @@ async function login(req, res, next) {
 function getAllUsers(req, res, next) {
   return User.find()
     .then((data) => res.send(data))
-    .catch((err) => next(err));
+    .catch(next);
 }
 
 function getUserById(req, res, next) {
@@ -83,7 +83,7 @@ function getUserById(req, res, next) {
     .catch((err) => {
       if (err.statusCode === 404) return next(new NotFoundError('Пользователь по указанному _id не найден'));
       if (err.name === 'CastError') return next(new BadRequestError('Получение пользователя с некорректным id'));
-      return next();
+      return next(err);
     });
 }
 
