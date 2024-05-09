@@ -1,5 +1,7 @@
-[![Статус тестов](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml)
+<!--
+[![Статус тестов](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml) 
 
+-->
 # Проект Место - Соцсеть для фоток
 
 ### Описание проекта
